@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping(path = "/api/v1/user", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -19,6 +21,11 @@ public class UserController {
     @GetMapping("/{id}")
     public UserEntity getUser(@PathVariable("id") Integer id){
         return userEntityService.getUser(id);
+    }
+
+    @GetMapping
+    public List<UserEntity> getAllUser(){
+        return userEntityService.getAllUser();
     }
 
     @PostMapping

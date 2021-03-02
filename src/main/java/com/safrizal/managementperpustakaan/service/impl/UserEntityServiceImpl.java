@@ -7,6 +7,7 @@ import com.safrizal.managementperpustakaan.service.UserEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,6 +20,11 @@ public class UserEntityServiceImpl implements UserEntityService {
     public UserEntity getUser(Integer id) {
         return userEntityRepository.findById(id)
                 .orElse(null);
+    }
+
+    @Override
+    public List<UserEntity> getAllUser() {
+        return userEntityRepository.findAll();
     }
 
     @Override
