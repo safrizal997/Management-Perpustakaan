@@ -9,13 +9,14 @@ public class BookEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_book")
     private Integer id;
     private String namaBuku;
     private Integer tahun;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_kategori", referencedColumnName = "id_kategori")
-    CategoriesEntity kategori;
+    private CategoriesEntity kategori;
     private Integer jumlah;
 
     public BookEntity() {
