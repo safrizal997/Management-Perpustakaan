@@ -7,23 +7,23 @@ import java.util.List;
 
 public class TransactionResponse {
 
-   private TransactionEntity pinjam;
+   private TransactionEntity transaction;
    private List<DetailTransactionEntity> books;
 
     public TransactionResponse() {
     }
 
-    public TransactionResponse(TransactionEntity pinjam, List<DetailTransactionEntity> books) {
-        this.pinjam = pinjam;
+    public TransactionResponse(TransactionEntity transaction, List<DetailTransactionEntity> books) {
+        this.transaction = transaction;
         this.books = books;
     }
 
-    public TransactionEntity getPinjam() {
-        return pinjam;
+    public TransactionEntity getTransaction() {
+        return transaction;
     }
 
-    public void setPinjam(TransactionEntity pinjam) {
-        this.pinjam = pinjam;
+    public void setTransaction(TransactionEntity transaction) {
+        this.transaction = transaction;
     }
 
     public List<DetailTransactionEntity> getBooks() {

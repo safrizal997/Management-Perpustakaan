@@ -33,6 +33,7 @@ public class BookEntityServiceImpl implements BookEntityService {
 
     toSave.setNamaBuku(bookRequest.getNamaBuku());
     toSave.setTahun(bookRequest.getTahun());
+    toSave.setJumlah(bookRequest.getJumlah());
 
     Integer id;
     id = bookRequest.getKategori();

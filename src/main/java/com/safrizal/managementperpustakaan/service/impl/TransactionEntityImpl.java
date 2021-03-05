@@ -38,13 +38,13 @@ public class TransactionEntityImpl implements TransactionEntityService {
 
         if (transactionEntity.isPresent()) {
 
-            TransactionEntity pinjam = transactionEntity.get();
+            TransactionEntity transaction = transactionEntity.get();
 
             List<DetailTransactionEntity> bookDetail = detailTransactionEntityRepository
-                    .findByTransactionId(pinjam);
+                    .findByTransactionId(transaction);
 
             TransactionResponse transactionResponse = new TransactionResponse();
-            transactionResponse.setPinjam(pinjam);
+            transactionResponse.setTransaction(transaction);
             transactionResponse.setBooks(bookDetail);
 
             return transactionResponse;
@@ -68,8 +68,10 @@ public class TransactionEntityImpl implements TransactionEntityService {
                     user
             );
 
-            int lamaPeminjaman = transactionRequest.getTglPinjam()
-                    .compareTo(transactionRequest.getTglKembali());
+            long lamaPinjam = transactionRequest.getTglKembali().getTime() - transactionRequest.getTglPinjam().getTime();
+            long selisihHari = lamaPinjam / (24 * 60 * 60 * 1000);
+
+            int lamaPeminjaman = (int) selisihHari;
 
             TransactionEntity transactionFromDB = transactionEntityRepository
                     .save(transactionToSave);

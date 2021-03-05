@@ -13,11 +13,11 @@ public class DetailTransactionEntity {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "fk_book", referencedColumnName = "id_book")
+    @JoinColumn(name = "book_Id", referencedColumnName = "id_book")
     private BookEntity bookId;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_pinjam", referencedColumnName = "id_transaction")
+    @JoinColumn(name = "transaction_Id", referencedColumnName = "id_transaction")
     private TransactionEntity transactionId;
 
     private Integer lamaPeminjaman;
