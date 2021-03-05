@@ -14,7 +14,7 @@ public class BookEntity {
     private String namaBuku;
     private Integer tahun;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "fk_kategori", referencedColumnName = "id_kategori")
     private CategoriesEntity kategori;
     private Integer jumlah;
@@ -61,7 +61,7 @@ public class BookEntity {
     }
 
 
-    public Integer getJumlah(Integer jumlah) {
+    public Integer getJumlah() {
         return this.jumlah;
     }
 

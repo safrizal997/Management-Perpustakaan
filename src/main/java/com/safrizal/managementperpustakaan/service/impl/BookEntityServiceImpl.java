@@ -43,7 +43,7 @@ public class BookEntityServiceImpl implements BookEntityService {
         toSave.setKategori(fromDB.get());
     }
 
-    toSave.getJumlah(bookRequest.getJumlah());
+    toSave.setJumlah(bookRequest.getJumlah());
 
         return bookEntityRepository.save(toSave);
     }
