@@ -41,7 +41,7 @@ public class TransactionEntityImpl implements TransactionEntityService {
             TransactionEntity pinjam = transactionEntity.get();
 
             List<DetailTransactionEntity> bookDetail = detailTransactionEntityRepository
-                    .findByTransactionId(pinjam.getTransactionId());
+                    .findByTransactionId(pinjam);
 
             TransactionResponse transactionResponse = new TransactionResponse();
             transactionResponse.setPinjam(pinjam);

@@ -12,7 +12,7 @@ public class DetailTransactionEntity {
     @Column(name = "id_detail_transaction")
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "fk_book", referencedColumnName = "id_book")
     private BookEntity bookId;
 
