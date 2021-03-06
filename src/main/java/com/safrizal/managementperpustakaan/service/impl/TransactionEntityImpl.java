@@ -1,11 +1,9 @@
 package com.safrizal.managementperpustakaan.service.impl;
 
-import com.safrizal.managementperpustakaan.entity.BookEntity;
-import com.safrizal.managementperpustakaan.entity.DetailTransactionEntity;
-import com.safrizal.managementperpustakaan.entity.TransactionEntity;
-import com.safrizal.managementperpustakaan.entity.UserEntity;
+import com.safrizal.managementperpustakaan.entity.*;
 import com.safrizal.managementperpustakaan.model.TransactionRequest;
 import com.safrizal.managementperpustakaan.model.TransactionResponse;
+import com.safrizal.managementperpustakaan.model.TransactionWishlistRequest;
 import com.safrizal.managementperpustakaan.repository.BookEntityRepository;
 import com.safrizal.managementperpustakaan.repository.DetailTransactionEntityRepository;
 import com.safrizal.managementperpustakaan.repository.TransactionEntityRepository;
@@ -98,26 +96,77 @@ public class TransactionEntityImpl implements TransactionEntityService {
                 Optional<BookEntity> optBook = bookEntityRepository.findById(books.getId());
 
                 // 09. Set newTransactionDetailToSave
-                    newTransactionDetailToSave.add(
-                            new DetailTransactionEntity(
-                                    optBook.orElse(null),
-                                    transactionFromDB,
-                                    lamaPeminjaman,
-                                    1
-                            )
-                    );
+                newTransactionDetailToSave.add(
+                        new DetailTransactionEntity(
+                                optBook.orElse(null),
+                                transactionFromDB,
+                                lamaPeminjaman,
+                                1
+                        )
+                );
             }
-
             // 10. Save newTransactionDetailToSave to BD
             List<DetailTransactionEntity> detailTransactionFromDB = detailTransactionEntityRepository
                     .saveAll(newTransactionDetailToSave);
 
             // 11. Final Return Transaction Response
             return new TransactionResponse(transactionFromDB, detailTransactionFromDB);
-
         }
-
         // 12. Default Response
+        return null;
+    }
+
+    @Override
+    @Transactional
+    public TransactionResponse addTransactionFromWishlist(TransactionWishlistRequest transactionWishlistRequest) {
+        // 01. Get user from DB by ID
+        Optional<UserEntity> userEntity = userEntityRepository.findById(transactionWishlistRequest.getUserId());
+
+        // 02. Check if user present
+        if (userEntity.isPresent()) {
+            // 04. Set object transaction to save
+            TransactionEntity transactionToSave = new TransactionEntity(
+                    transactionWishlistRequest.getTglPinjam(),
+                    transactionWishlistRequest.getTglKembali(),
+                    userEntity.get()
+            );
+
+            // 05. Set and calculate lamaPeminjaman
+            long lamaPinjam = transactionWishlistRequest.getTglKembali().getTime() - transactionWishlistRequest.getTglPinjam().getTime();
+            int lamaPeminjaman = (int) lamaPinjam / (24 * 60 * 60 * 1000);
+
+            // 06. Save transaction to DB
+            TransactionEntity transactionFromDB = transactionEntityRepository
+                    .save(transactionToSave);
+
+            List<WishlistEntity> wishlistEntities = transactionWishlistRequest.getBookWishlists();
+            List<DetailTransactionEntity> newTransactionDetailToSave = new ArrayList<>();
+
+            for (WishlistEntity wishlist : wishlistEntities) {
+                // 08. Update jumlah buku
+                int newJumlahBuku = wishlist.getBookId().getJumlah() - 1;
+                bookEntityRepository.updateJumlah(newJumlahBuku, wishlist.getBookId().getId());
+
+                Optional<BookEntity> optBook = bookEntityRepository
+                        .findById(wishlist.getBookId().getId());
+
+                // 09. Set newTransactionDetailToSave
+                newTransactionDetailToSave.add(
+                        new DetailTransactionEntity(
+                                optBook.orElse(null),
+                                transactionFromDB,
+                                lamaPeminjaman,
+                                1
+                        )
+                );
+            }
+            // 10. Save newTransactionDetailToSave to BD
+            List<DetailTransactionEntity> detailTransactionFromDB = detailTransactionEntityRepository
+                    .saveAll(newTransactionDetailToSave);
+
+            // 11. Final Return Transaction Response
+            return new TransactionResponse(transactionFromDB, detailTransactionFromDB);
+        }
         return null;
     }
 }

@@ -11,14 +11,19 @@ public class WishlistEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(referencedColumnName = "id_user")
     private UserEntity userId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(referencedColumnName = "id_book")
     private BookEntity bookId;
     private Date tgl = new Date();
+
+    public WishlistEntity(UserEntity userId, BookEntity bookId) {
+        this.userId = userId;
+        this.bookId = bookId;
+    }
 
     public WishlistEntity() {
     }
