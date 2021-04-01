@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/v1/wishlist", produces = MediaType.APPLICATION_JSON_VALUE)
+@CrossOrigin("*")
 @Api(tags = {"Wishlist Service"}, description = "Handling Wishlist Action")
 public class WishlistController{
 

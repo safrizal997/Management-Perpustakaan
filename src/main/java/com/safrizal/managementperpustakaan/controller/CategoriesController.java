@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/v1/categories", produces = MediaType.APPLICATION_JSON_VALUE)
+@CrossOrigin("*")
 @Api(tags = {"Category Service"}, description = "Handling Category Action")
 public class CategoriesController {
 

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/api/v1/transaction", produces = MediaType.APPLICATION_JSON_VALUE)
+@CrossOrigin("*")
 @Api(tags = {"Transaction Service"}, description = "Handling Transaction Action")
 public class TransactionController {
 

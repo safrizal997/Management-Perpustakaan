@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/v1/book", produces = MediaType.APPLICATION_JSON_VALUE)
+@CrossOrigin("*")
 @Api(tags = {"Book Service"}, description = "Handling Book Action")
 public class BookController {
 

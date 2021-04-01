@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/v1/user", produces = MediaType.APPLICATION_JSON_VALUE)
+@CrossOrigin("*")
 @Api(tags = {"User Service"}, description = "Handling User Action")
 public class UserController {
 
